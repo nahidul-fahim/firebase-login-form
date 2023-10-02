@@ -14,6 +14,8 @@ const Login = () => {
         e.preventDefault();
         const email = e.target.email.value;
         const password = e.target.password.value;
+        setUserCheck('');
+        setUserCheckFailed('');
 
         signInWithEmailAndPassword(auth, email, password)
         .then(userDetails => {
