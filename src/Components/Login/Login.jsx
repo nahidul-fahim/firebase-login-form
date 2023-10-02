@@ -7,20 +7,23 @@ const Login = () => {
     const auth = getAuth(app);
 
     const [showPassword, setShowPassword] = useState(false);
+    const [userCheck, setUserCheck] = useState('');
+    const [userCheckFailed, setUserCheckFailed] = useState('');
 
     const handleLogin = e => {
         e.preventDefault();
         const email = e.target.email.value;
         const password = e.target.password.value;
-        console.log(email, password);
 
         signInWithEmailAndPassword(auth, email, password)
         .then(userDetails => {
             const user = userDetails.user;
+            setUserCheck(user);
         })
         .catch(error => {
             console.log(error.code)
             console.log(error.message)
+            setUserCheckFailed(error.message);
         })
     }
 
@@ -46,12 +49,12 @@ const Login = () => {
                 </div>
                 <input type="submit" value="Login" className="bg-[#2b2b2b] cursor-pointer text-white px-4 py-2 rounded-md font-semibold hover:bg-[gray] duration-300" />
             </form>
-            {/* {
-                errorMessage ? <p className="text-base font-semibold text-[red]">{errorMessage}</p> : ''
+            {
+                userCheckFailed ? <p className="text-base font-semibold text-[red]">Please check your email and password again</p> : ''
             }
             {
-                successMessage ? <p className="text-base font-semibold text-[#138f24]">Congratualtions! You have successfully created an account.</p> : ''
-            } */}
+                userCheck ? <p className="text-base font-semibold text-[#138f24]">Congratualtions! You are logged in.</p> : ''
+            }
         </div>
     );
 };
